@@ -8,19 +8,20 @@ import Profile from './components/profile-activity/Profile';
 import Notification from './components/notification-activity/Notification';
 import Post from './components/post-activity/Post';
 import Message from './components/message-activity/Message';
+import Home from './components/home-activity/Home'
 
 
 class HomeScreen extends React.Component {
   render() {
     return (
-       <MainCard style={styles.container}/>
+       <Home></Home>
     )
   }
 }
 class NotificationScreen extends React.Component {
   render() {
     return (
-       <Notification />
+      <MainCard style={styles.container}/>
     )
   }
 }
@@ -69,12 +70,12 @@ const TabNavigator = createMaterialBottomTabNavigator(
         ),
       }
     },
-    Notification: {
+    Posts: {
       screen: NotificationScreen,
       navigationOptions: {
         tabBarIcon: ({ tintColor }) => (
           <View>
-            <Icon style={[{color: tintColor}]} size={25} name={'ios-heart'} />
+            <Icon style={[{color: tintColor}]} size={25} name={'ios-albums'} />
           </View>
         ),
         activeColor: '#ffffff',
@@ -125,8 +126,8 @@ const TabNavigator = createMaterialBottomTabNavigator(
   {
     initialRouteName: 'Home',
     activeColor: '#ffffff',
-    inactiveColor: '#bda1f7',
-    barStyle: { backgroundColor: '#6948f4' },
+    inactiveColor: 'white',
+    barStyle: { backgroundColor: 'black' },
   }
 );
 

@@ -1,5 +1,5 @@
 import React from "react";
-import Modal from "react-native-modal";
+import { Modal, Provider, Portal } from "react-native-paper";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import { faPaperclip } from "@fortawesome/free-solid-svg-icons";
 import * as ImagePicker from "expo-image-picker";
@@ -43,8 +43,8 @@ export default class PostBox extends React.Component {
     this.setState({ showModal: true });
   };
   hideModal = () => {
-    if(this.state.cardText || this.state.image) {
-      let card = {cardText: this.state.cardText, image: this.state.image}
+    if (this.state.cardText || this.state.image) {
+      let card = { cardText: this.state.cardText, image: this.state.image };
       this.props.card(card);
       this.setState({ showModal: false, cardText: "", image: null });
     }
@@ -53,8 +53,8 @@ export default class PostBox extends React.Component {
   };
   uploadImage = async () => {
     //handle image upload here
-    let {image} = this.state;
-  }
+    let { image } = this.state;
+  };
   openImagePicker = async () => {
     try {
       let result = await ImagePicker.launchImageLibraryAsync({
@@ -75,38 +75,40 @@ export default class PostBox extends React.Component {
 
   render() {
     let { image } = this.state;
+    let { showModal } = this.state;
     return (
-      <View style={styles.container}>
-        <Modal isVisible={this.state.showModal} style={styles.view}>
-          <TextInput
-            style={styles.textInput}
-            multiline={true}
-            onChangeText={(cardText) => this.setState({ cardText })}
-            value={this.state.cardText}
-            placeholder="> What do you want to share?"
-            placeholderTextColor="white"
-            underlineColorAndroid="transparent"
-          ></TextInput>
+      <Provider style={styles.container}>
+        <Portal>
+          <Modal visible={showModal} style={styles.view}>
+            {image && (
+              <Image
+                source={{ uri: image }}
+                style={{ width: 100, height: 100, padding: 25 }}
+              />
+            )}
+            <TextInput
+              style={styles.textInput}
+              multiline={true}
+              onChangeText={(cardText) => this.setState({ cardText })}
+              value={this.state.cardText}
+              placeholder="What's on your mind?"
+              placeholderTextColor="grey"
+              underlineColorAndroid="transparent"
+            ></TextInput>
 
-          {image && (
-            <Image
-              source={{ uri: image }}
-              style={{ width: 200, height: 200, padding: 50}}
-            />
-          )}
-
-          <TouchableOpacity
-            onPress={this.openImagePicker}
-            style={styles.uploadButton}
-          >
-            <FontAwesomeIcon
-              icon={faPaperclip}
-              size={50}
-              style={{ padding: 10, color: "white" }}
-            />
-          </TouchableOpacity>
-        </Modal>
-      </View>
+            <TouchableOpacity
+              onPress={this.openImagePicker}
+              style={styles.uploadButton}
+            >
+              <FontAwesomeIcon
+                icon={faPaperclip}
+                size={50}
+                style={{ padding: 10, color: "white" }}
+              />
+            </TouchableOpacity>
+          </Modal>
+        </Portal>
+      </Provider>
     );
   }
 }
@@ -118,12 +120,13 @@ const options = {
     path: "images",
   },
 };
-const displayWidth = Dimensions.get("window").width;
 const styles = StyleSheet.create({
   view: {
+    flex: 1,
     justifyContent: "stretch",
+    alignItems: "center",
+    flexShrink: 1,
     margin: 0,
-    width: displayWidth,
     opacity: 1,
   },
   closeButton: {
@@ -139,7 +142,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: 'white'
+    backgroundColor: "white",
   },
   header: {
     backgroundColor: "#E91E63",
@@ -166,10 +169,10 @@ const styles = StyleSheet.create({
   },
   textInput: {
     textAlignVertical: "top",
-    height: 150,
-    color: "#fff",
+    height: 250,
+    color: "black",
     padding: 20,
-    backgroundColor: "#252525",
+    backgroundColor: "white",
     borderTopWidth: 2,
     borderTopColor: "#ededed",
   },
@@ -194,8 +197,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     zIndex: 11,
     left: 10,
-    bottom: 10,
-    backgroundColor: "skyblue",
+    bottom: 135,
+    backgroundColor: "black",
     width: 40,
     height: 40,
     borderRadius: 50,
