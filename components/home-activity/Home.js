@@ -15,7 +15,7 @@ import ImageCard from "../shared-components/CardView/ImageCard";
 import background from "../../assets/yoga.jpg";
 import background2 from "../../assets/runner.jpg";
 import background3 from "../../assets/dumbbell.jpg";
-import background4 from "../../assets/food.jpg";
+import background4 from "../../assets/Food.jpg";
 import background5 from "../../assets/boxer.jpg";
 
 const HEADER_MAX_HEIGHT = 110;
